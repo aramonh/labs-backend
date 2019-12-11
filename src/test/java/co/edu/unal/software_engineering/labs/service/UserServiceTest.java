@@ -15,7 +15,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 import static org.junit.Assert.*;
 import static org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase.Replace.NONE;
-
+//ADD comand
 @RunWith( SpringRunner.class )
 @DataJpaTest
 @AutoConfigureTestDatabase( replace = NONE )
