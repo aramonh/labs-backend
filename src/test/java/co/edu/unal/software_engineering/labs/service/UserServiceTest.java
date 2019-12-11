@@ -1,9 +1,9 @@
 package co.edu.unal.software_engineering.labs.service;
 
 import co.edu.unal.software_engineering.labs.model.Role;
-import co.edu.unal.software_engineering.labs.model.resu;
-import co.edu.unal.software_engineering.labs.pojo.RegisterresuPOJO;
-import co.edu.unal.software_engineering.labs.repository.resuRepository;
+import co.edu.unal.software_engineering.labs.model.User;
+import co.edu.unal.software_engineering.labs.pojo.RegisterUserPOJO;
+import co.edu.unal.software_engineering.labs.repository.UserRepository;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,96 +19,96 @@ import static org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTest
 @RunWith( SpringRunner.class )
 @DataJpaTest
 @AutoConfigureTestDatabase( replace = NONE )
-public class resuServiceTest{
+public class UserServiceTest{
 
     @TestConfiguration
-    static class resuServiceImpTestConfiguration{
+    static class UserServiceImpTestConfiguration{
         @Autowired
-        private resuRepository resuRepository;
+        private UserRepository userRepository;
 
         @Bean
-        public resuService resuService( ){
-            return new resuService( resuRepository );
+        public UserService userService( ){
+            return new UserService( userRepository );
         }
     }
 
     @Autowired
-    private resuService resuService;
+    private UserService userService;
 
     @Test
     public void crudTest( ){
-        String names = "Test resu";
+        String names = "Test User";
         String surnames = "Labs SE-II UN";
-        String resuname = "test";
+        String username = "test";
 
-        resu createresu = new resu( );
-        createresu.setNames( names );
-        createresu.setSurnames( surnames );
-        createresu.setresuname( resuname );
-        createresu.setPassword( resuname );
-        resuService.save( createresu );
+        User createUser = new User( );
+        createUser.setNames( names );
+        createUser.setSurnames( surnames );
+        createUser.setUsername( username );
+        createUser.setPassword( username );
+        userService.save( createUser );
 
-        resu readresu = resuService.findByresuname( resuname );
-        assertEquals( createresu, readresu );
+        User readUser = userService.findByUsername( username );
+        assertEquals( createUser, readUser );
 
-        createresu.addRole( Role.getStudent( ) );
-        resuService.save( createresu );
+        createUser.addRole( Role.getStudent( ) );
+        userService.save( createUser );
 
-        resu updatedresu = resuService.findByresuname( resuname );
-        assertEquals( createresu.getRoles( ), updatedresu.getRoles( ) );
+        User updatedUser = userService.findByUsername( username );
+        assertEquals( createUser.getRoles( ), updatedUser.getRoles( ) );
     }
 
     @Test
-    public void isRightresuTest( ){
-        RegisterresuPOJO resu = new RegisterresuPOJO( );
-        assertFalse( resuService.isRightresu( resu ) );
+    public void isRightUserTest( ){
+        RegisterUserPOJO user = new RegisterUserPOJO( );
+        assertFalse( userService.isRightUser( user ) );
 
-        resu.setNames( "" );
-        assertFalse( resuService.isRightresu( resu ) );
+        user.setNames( "" );
+        assertFalse( userService.isRightUser( user ) );
 
-        resu.setNames( null );
-        resu.setPassword( "" );
-        assertFalse( resuService.isRightresu( resu ) );
+        user.setNames( null );
+        user.setPassword( "" );
+        assertFalse( userService.isRightUser( user ) );
 
-        resu.setPassword( null );
-        resu.setSurnames( "" );
-        assertFalse( resuService.isRightresu( resu ) );
+        user.setPassword( null );
+        user.setSurnames( "" );
+        assertFalse( userService.isRightUser( user ) );
 
-        resu.setSurnames( null );
-        resu.setresuname( "" );
-        assertFalse( resuService.isRightresu( resu ) );
+        user.setSurnames( null );
+        user.setUsername( "" );
+        assertFalse( userService.isRightUser( user ) );
 
-        resu.setNames( "" );
-        resu.setSurnames( "" );
-        resu.setPassword( "" );
-        assertFalse( resuService.isRightresu( resu ) );
+        user.setNames( "" );
+        user.setSurnames( "" );
+        user.setPassword( "" );
+        assertFalse( userService.isRightUser( user ) );
 
-        resu.setNames( "   " );
-        resu.setSurnames( "   " );
-        resu.setPassword( "   " );
-        resu.setresuname( "   " );
-        assertFalse( resuService.isRightresu( resu ) );
+        user.setNames( "   " );
+        user.setSurnames( "   " );
+        user.setPassword( "   " );
+        user.setUsername( "   " );
+        assertFalse( userService.isRightUser( user ) );
 
-        resu.setNames( "test" );
-        assertFalse( resuService.isRightresu( resu ) );
+        user.setNames( "test" );
+        assertFalse( userService.isRightUser( user ) );
 
-        resu.setNames( "   " );
-        resu.setSurnames( "Test" );
-        assertFalse( resuService.isRightresu( resu ) );
+        user.setNames( "   " );
+        user.setSurnames( "Test" );
+        assertFalse( userService.isRightUser( user ) );
 
-        resu.setSurnames( "   " );
-        resu.setPassword( "Test" );
-        assertFalse( resuService.isRightresu( resu ) );
+        user.setSurnames( "   " );
+        user.setPassword( "Test" );
+        assertFalse( userService.isRightUser( user ) );
 
-        resu.setPassword( "   " );
-        resu.setresuname( "Test" );
-        assertFalse( resuService.isRightresu( resu ) );
+        user.setPassword( "   " );
+        user.setUsername( "Test" );
+        assertFalse( userService.isRightUser( user ) );
 
-        resu.setNames( "Test" );
-        resu.setSurnames( "Test" );
-        resu.setPassword( "Test" );
-        resu.setresuname( "Test" );
-        assertTrue( resuService.isRightresu( resu ) );
+        user.setNames( "Test" );
+        user.setSurnames( "Test" );
+        user.setPassword( "Test" );
+        user.setUsername( "Test" );
+        assertTrue( userService.isRightUser( user ) );
     }
 
 }
